@@ -1,0 +1,83 @@
+{
+    "version": 3,
+    "configurePresets": [
+        {
+            "name": "Settings",
+            "hidden": true,
+            "cacheVariables": {
+                "MYLIB_BUILD_SHARED_LIBS": "OFF",
+                "MYLIB_BUILD_EXAMPLES": "OFF"
+            }
+        },
+        {
+            "name": "Ninja-Debug",
+            "displayName": "Ninja (Debug)",
+            "inherits": [ "Settings" ],
+            "generator": "Ninja",
+            "binaryDir": "${sourceDir}/build/Ninja/Debug",
+            "installDir": "${sourceDir}/install/Ninja/Debug",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Debug"
+            }
+        },
+        {
+            "name": "Ninja-Release",
+            "displayName": "Ninja (Release)",
+            "inherits": [ "Settings" ],
+            "generator": "Ninja",
+            "binaryDir": "${sourceDir}/build/Ninja/Release",
+            "installDir": "${sourceDir}/install/Ninja/Release",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Release"
+            }
+        },
+        {
+            "name": "Vs22",
+            "displayName": "Visual Studio 2022",
+            "inherits": [ "Settings" ],
+            "generator": "Visual Studio 17 2022",
+            "binaryDir": "${sourceDir}/build/${presetName}",
+            "installDir": "${sourceDir}/install/${presetName}",
+            "condition": {
+                "type": "equals",
+                "lhs": "${hostSystemName}",
+                "rhs": "Windows"
+            }
+        }
+    ],
+    "buildPresets": [
+        {
+            "name": "WindowsOnly",
+            "hidden": true,
+            "condition": {
+                "type": "equals",
+                "lhs": "${hostSystemName}",
+                "rhs": "Windows"
+            }
+        },
+        {
+            "name": "Ninja-Debug",
+            "displayName": "Debug",
+            "configurePreset": "Ninja-Debug"
+        },
+        {
+            "name": "Ninja-Release",
+            "displayName": "Release",
+            "configurePreset": "Ninja-Release"
+        },
+        {
+            "name": "Vs22-Debug",
+            "displayName": "Debug",
+            "configurePreset": "Vs22",
+            "inherits": [ "WindowsOnly" ],
+            "configuration": "Debug"
+        },
+        {
+            "name": "Vs22-Release",
+            "displayName": "Release",
+            "configurePreset": "Vs22",
+            "inherits": [ "WindowsOnly" ],
+            "configuration": "Release"
+        }
+    ]
+}
